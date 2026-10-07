@@ -979,6 +979,7 @@ section {
 .calculator-wrapper {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: var(--radius-xl);
   padding: 40px;
@@ -986,18 +987,29 @@ section {
   display: grid;
   grid-template-columns: 1.3fr 1fr;
   gap: 40px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.calculator-wrapper > * {
+  min-width: 0;
 }
 
 .calc-form {
   display: flex;
   flex-direction: column;
   gap: 22px;
+  width: 100%;
+  min-width: 0;
 }
 
 .calc-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
+  min-width: 0;
 }
 
 .calc-label {
@@ -1005,8 +1017,20 @@ section {
   font-weight: 700;
   color: rgba(255, 255, 255, 0.9);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  line-height: 1.35;
+  word-break: break-word;
+}
+
+.calc-label svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.calc-label span {
+  flex: 1;
+  min-width: 0;
 }
 
 .calc-select, .calc-input {
@@ -1017,6 +1041,9 @@ section {
   border-radius: var(--radius-md);
   font-size: 0.95rem;
   transition: var(--transition-fast);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 
 .calc-select option {
@@ -1033,11 +1060,13 @@ section {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 10px;
+  width: 100%;
+  min-width: 0;
 }
 
 .calc-checkbox-label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 10px;
   font-size: 0.85rem;
   color: rgba(255, 255, 255, 0.85);
@@ -1046,6 +1075,22 @@ section {
   border-radius: var(--radius-sm);
   cursor: pointer;
   transition: var(--transition-fast);
+  width: 100%;
+  box-sizing: border-box;
+  min-width: 0;
+}
+
+.calc-checkbox-label input {
+  flex-shrink: 0;
+  margin-top: 3px;
+  accent-color: var(--color-yellow);
+}
+
+.calc-checkbox-label span {
+  flex: 1;
+  min-width: 0;
+  line-height: 1.35;
+  word-break: break-word;
 }
 
 .calc-checkbox-label:hover {
@@ -1060,6 +1105,9 @@ section {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .calc-summary-header h3 {
@@ -1081,6 +1129,8 @@ section {
   padding: 20px;
   border-radius: var(--radius-md);
   border: 1px dashed rgba(255, 255, 255, 0.2);
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .calc-price-currency {
@@ -1106,7 +1156,17 @@ section {
   display: flex;
   flex-direction: column;
   gap: 12px;
+  width: 100%;
 }
+
+.calc-actions .btn {
+  width: 100%;
+  white-space: normal;
+  text-align: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
 
 /* ==========================================================================
    Offices & Contact Section
@@ -1649,29 +1709,6 @@ section {
 }
 
 /* ==========================================================================
-   Fluid Logo Ribbons & Spark Points Cursor Effect
-   ========================================================================== */
-#fluidCursorCanvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 10000;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-#fluidCursorCanvas.active {
-  opacity: 1;
-}
-
-/* ==========================================================================
-   Floating WhatsApp Button
-   ========================================================================== */
-
-/* ==========================================================================
    Floating WhatsApp Button
    ========================================================================== */
 .floating-whatsapp {
@@ -2093,35 +2130,99 @@ section {
   }
 
   /* Interactive Calculator */
+  .calculator-section {
+    overflow: hidden;
+  }
+
   .calculator-wrapper {
     grid-template-columns: 1fr;
-    padding: 24px 16px;
-    gap: 24px;
+    padding: 20px 14px;
+    gap: 20px;
     border-radius: var(--radius-lg);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .calc-form {
+    gap: 16px;
+    width: 100%;
+    min-width: 0;
+  }
+
+  .calc-label {
+    font-size: 0.84rem;
+    line-height: 1.35;
+    word-break: break-word;
+  }
+
+  .calc-select, .calc-input {
+    font-size: 16px; /* Evita auto-zoom en iOS Safari */
+    min-height: 48px;
+    padding: 10px 14px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-radius: var(--radius-sm);
   }
 
   .calc-addons-grid {
     grid-template-columns: 1fr;
     gap: 8px;
+    width: 100%;
   }
 
-  .calc-select, .calc-input {
-    font-size: 16px; /* Evita auto-zoom en iOS Safari */
-    min-height: 46px;
-    padding: 10px 14px;
+  .calc-checkbox-label {
+    padding: 10px 12px;
+    font-size: 0.82rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .calc-summary-card {
-    padding: 20px 16px;
+    padding: 20px 14px;
+    border-radius: var(--radius-md);
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .calc-summary-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .calc-summary-header p {
+    font-size: 0.8rem;
+    line-height: 1.4;
   }
 
   .calc-price-display {
-    padding: 16px 12px;
+    padding: 14px 10px;
     margin: 16px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .calc-price-currency {
+    font-size: 0.95rem;
   }
 
   .calc-price-num {
     font-size: 2.2rem;
+  }
+
+  .calc-actions {
+    width: 100%;
+  }
+
+  .calc-actions .btn-whatsapp {
+    width: 100%;
+    padding: 14px 12px;
+    font-size: 0.88rem;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
+    justify-content: center;
   }
 
   /* Offices & Contact Form */
