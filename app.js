@@ -280,16 +280,48 @@ function initMobileMenu() {
   const menuBtn = document.getElementById("mobileMenuBtn");
   const navMenu = document.getElementById("navMenu");
   
-  menuBtn.addEventListener("click", () => {
-    navMenu.classList.toggle("open");
+  if (!menuBtn || !navMenu) return;
+
+  function toggleMenu(forceClose = false) {
+    const isOpen = forceClose ? false : !navMenu.classList.contains("open");
+    
+    if (isOpen) {
+      navMenu.classList.add("open");
+      menuBtn.setAttribute("aria-expanded", "true");
+      menuBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+      document.body.style.overflow = "hidden";
+    } else {
+      navMenu.classList.remove("open");
+      menuBtn.setAttribute("aria-expanded", "false");
+      menuBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>`;
+      document.body.style.overflow = "";
+    }
+  }
+
+  menuBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleMenu();
   });
 
   navMenu.querySelectorAll(".nav-link").forEach(link => {
     link.addEventListener("click", () => {
-      navMenu.classList.remove("open");
+      toggleMenu(true);
     });
   });
+
+  document.addEventListener("click", (e) => {
+    if (navMenu.classList.contains("open") && !navMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+      toggleMenu(true);
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && navMenu.classList.contains("open")) {
+      toggleMenu(true);
+    }
+  });
 }
+
 
 // 4. Render Tours Catalog
 function renderTours(category = "all") {
